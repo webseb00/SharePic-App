@@ -1,3 +1,5 @@
+import { client } from '../../utils/client';
+import { fetchUserQuery } from '../../utils/query';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import GoogleLogin from 'react-google-login';
@@ -11,19 +13,35 @@ const Login = () => {
   const [loginMessage, setLoginMessage] = useState('');
 
   useEffect(() => {
-    if(localStorage.getItem('profileObj')) router.push('/');
+    if(localStorage.getItem('profileObj')) router.replace('/');
   }, [])
 
-  const onSuccess = res => {
+  const onSuccess = async res => {
     const { profileObj } = res;
     localStorage.setItem('profileObj', JSON.stringify(profileObj));
+
+    const { name, imageUrl, googleId } = profileObj;
+    const doc = {
+      _type: 'user',
+      full_name: name,
+      image: imageUrl,
+      googleID: googleId
+    }
+    
+    client.fetch(fetchUserQuery(googleId))
+      .then(user => {
+        if(!user.length) {
+          client.create(doc).then((res) => console.log(`User was created, user ID is ${res._id}`));
+        }
+      })
+      .catch(err => console.log(err));
+  
     router.push('/');
   }
 
   const onFailure = res => {
     setLoginError(true);
     setLoginMessage("An error occurred");
-    console.log(res);
   }
 
   return (

@@ -1,19 +1,15 @@
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
+import { authWrapper } from '../wrapper/index';
 import Logout from '../containers/Logout/Logout';
+import Home from '../containers/Home/Home';
 
-export default function Home() {
-
-  const router = useRouter();
-
-  useEffect(() => {
-    if(!localStorage.getItem('profileObj')) router.push('/login');
-  }, [])
+function Main() {
 
   return (
     <>
-      <Logout />
-      <h3>home page</h3>
+      {/* <Logout /> */}
+      <Home />
     </>
   )
 }
+
+export default authWrapper(Main);

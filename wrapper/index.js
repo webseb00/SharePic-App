@@ -1,0 +1,1 @@
+export { default as authWrapper } from './authWrapper';

@@ -1,11 +1,17 @@
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useGoogleLogout } from 'react-google-login';
 import { AiOutlineLogout } from 'react-icons/ai';
 import styles from './Logout.module.css';
 
 const Logout = () => {
-
+  
   const router = useRouter();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    if(!mounted) setMounted(true);
+  }, []);
 
   const onSuccess = () => {
     localStorage.removeItem('profileObj');
@@ -21,12 +27,14 @@ const Logout = () => {
 
 
   return (
-    <button 
-      className={`${styles['app__logout-btn']} shadow-md`}
-      onClick={signOut} 
-    >
-      <AiOutlineLogout className={`${styles['app__logout-icon']} text-red-500`} />
-    </button>
+      (mounted && 
+        <button 
+          className={`${styles['app__logout-btn']} shadow-md`}
+          onClick={signOut} 
+        >
+          <AiOutlineLogout className={`${styles['app__logout-icon']} text-red-500`} />
+        </button>
+      )
   )
 }
 
