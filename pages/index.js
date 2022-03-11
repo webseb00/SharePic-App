@@ -1,15 +1,8 @@
-import { authWrapper } from '../wrapper/index';
-import Logout from '../containers/Logout/Logout';
-import Home from '../containers/Home/Home';
+import { authWrapper, AppWrapper } from '../wrapper/index';
+import { PicsContainer } from '../containers/index';
 
 function Main() {
-
-  return (
-    <>
-      {/* <Logout /> */}
-      <Home />
-    </>
-  )
+  return <PicsContainer />;
 }
 
-export default authWrapper(Main);
+export default authWrapper(AppWrapper(Main));
