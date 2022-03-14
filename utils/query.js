@@ -19,6 +19,12 @@ export const fetchPicsByCategoryID = param => {
 }
 
 export const fetchPicsByUserID = param => {
-  const query = `*[_type == 'pinpost' && author._ref == '${param}']{ _id, title, 'imageUrl': image.asset->url, author->, link }`;
+  const query = `*[_type == 'pinpost' && author->googleID == '${param}']{ _id, title, 'imageUrl': image.asset->url, author->, link }`;
+  return query;
+}
+
+
+export const fetchPicDetailsQuery = param => {
+  const query = `*[_type == 'pinpost' && _id == '${param}']{ _id, title, link, description, 'category_slug': categories->slug.current, 'category_id': categories->_id ,author->, 'imageUrl': image.asset->url }`;
   return query;
 }
