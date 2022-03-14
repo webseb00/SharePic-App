@@ -21,11 +21,15 @@ const SideBar = () => {
   }, []);
 
   return (
-    <div className="h-screen w-[260px]">
-      <div className="flex flex-col h-full overflow-y-scroll disable-scrollbar py-4">
-        <div className="flex items-center mb-4 text-2xl text-gray-300 font-semibold px-4">
-          <BsCameraFill className="text-3xl mr-1.5" />
-          <h5>Share<span className="text-red-500">Pic</span></h5>
+    <div className="h-screen w-[260px] overflow-y-scroll disable-scrollbar">
+      <div className="flex flex-col py-4">
+        <div className="mb-4 text-2xl text-gray-300 font-semibold px-4">
+          <Link href="/">
+            <a className="flex justify-center items-center">
+              <BsCameraFill className="text-3xl mr-1.5" />
+              <h5>Share<span className="text-red-500">Pic</span></h5>
+            </a>
+          </Link>
         </div>
         <Link href="/">
           <a className="flex items-center text-l text-gray-500 font-semibold px-4">
@@ -44,8 +48,9 @@ const SideBar = () => {
                   <Link 
                     href={{
                       pathname: `/category/[slug]`,
-                      query: { slug: slug.current }
+                      query: { slug: slug.current, id: _id }
                     }} 
+                    as={`/category/${slug.current}`}
                     key={_id}
                   >
                     <a className={`${styles['app__sidebar-link']} pl-4 text-l text-gray-400 font-semibold flex items-center transition duration-300 hover:text-gray-900`}>

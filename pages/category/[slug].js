@@ -1,9 +1,11 @@
 import { useRouter } from 'next/router'
+import { PicsContainer } from '../../containers';
+import { AppWrapper } from '../../wrapper/index';
 
 const Category = () => {
-  return (
-    <h4>Category: </h4>
-  )
+  const router = useRouter();
+  
+  return <PicsContainer urlParams={router.query} />;
 }
 
-export default Category;
+export default AppWrapper(Category);
