@@ -9,17 +9,17 @@ export const fetchCategoriesQuery = () => {
 }
 
 export const fetchAllPics = () => {
-  const query = `*[_type == 'pinpost']{ _id, title, 'imageUrl': image.asset->url, author->, link }`;
+  const query = `*[_type == 'pinpost'] | order(_createdAt desc) { _id, title, 'imageUrl': image.asset->url, author->, link }`;
   return query;
 }
 
 export const fetchPicsByCategoryID = param => {
-  const query = `*[_type == 'pinpost' && categories._ref == '${param}']{ _id, title, 'imageUrl': image.asset->url, author->, link }`;
+  const query = `*[_type == 'pinpost' && categories._ref == '${param}'] | order(_createdAt desc) { _id, title, 'imageUrl': image.asset->url, author->, link }`;
   return query;
 }
 
 export const fetchPicsByUserID = param => {
-  const query = `*[_type == 'pinpost' && author->googleID == '${param}']{ _id, title, 'imageUrl': image.asset->url, author->, link }`;
+  const query = `*[_type == 'pinpost' && author->googleID == '${param}'] | order(_createdAt desc) { _id, title, 'imageUrl': image.asset->url, author->, link }`;
   return query;
 }
 

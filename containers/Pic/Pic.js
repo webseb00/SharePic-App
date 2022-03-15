@@ -3,7 +3,7 @@ import { MdDownloadForOffline } from 'react-icons/md';
 import Link from 'next/link';
 
 const Pic = ({ item }) => {
-
+  
   const { _id, title, imageUrl, link, author } = item;
 
   return (
@@ -30,7 +30,7 @@ const Pic = ({ item }) => {
       </Link>
       <Link href={{
         pathname: '/user-profile/[id]',
-        query: { id: author._id }
+        query: { id: author.googleID }
       }}>
         <a className="flex items-center flex-start mt-2">
           <img src={author.image} alt={author.full_name} className="w-8 h-8 rounded-full" />

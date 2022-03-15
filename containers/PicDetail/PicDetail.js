@@ -4,10 +4,9 @@ import { client } from '../../utils/client';
 import { fetchPicDetailsQuery } from '../../utils/query';
 import { Loader } from '../../components';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+
 const PicDetail = ({ picID }) => {
-  const router = useRouter();
-  console.log(router);
+
   const [pics, setPics] = useState(null);
   const [pic, setPic] = useState(null);
   const [profileObj, setProfileObj] = useState(null);
@@ -45,7 +44,7 @@ const PicDetail = ({ picID }) => {
             <p className="text-xl">{pic.description}</p>
           </div>
           <div>
-            <Link href={`/user-profile/${pic?.authorgoogleID}`}>
+            <Link href={`/user-profile/${pic?.author.googleID}`}>
               <a className="flex items-center">
                 <img src={pic?.author.image} alt={pic?.author.full_name} className="w-10 h-10 rounded-full" />
                 <p className="font-semibold ml-2">{pic?.author.full_name}</p>

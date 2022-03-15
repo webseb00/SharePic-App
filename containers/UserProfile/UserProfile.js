@@ -6,13 +6,12 @@ import { Loader } from '../../components/index';
 
 const UserProfile = ({ userId }) => {
 
-  const [profileObj, setProfileObj] = useState(null);
   const [active, setActive] = useState('created');
   const [items, setItems] = useState([]);
+  const [author, setAuthor] = useState(null);
   const [backgroundUrl, setBackgroundUrl] = useState('');
 
   useEffect(() => {
-    setProfileObj(JSON.parse(localStorage.getItem('profileObj')));
     // fetch random background form unsplash API
     fetch(`https://api.unsplash.com/photos/random/?client_id=${process.env.UNSPLASH_API_ACCESS_KEY}`)
       .then(res => res.json())
@@ -23,7 +22,10 @@ const UserProfile = ({ userId }) => {
     // fetch pics CREATED by the user
     if(active === 'created') {
       client.fetch(fetchPicsByUserID(userId))
-        .then(res => setItems(res))
+        .then(res => {
+          setItems(res);
+          setAuthor(res[0].author);
+        })
         .catch(err => console.log(err.message));
     }
     //fetch pics SAVED by the user
@@ -37,7 +39,7 @@ const UserProfile = ({ userId }) => {
     setActive(e.target.value);
   }
 
-  if(!profileObj) return <Loader />;
+  if(!author) return <Loader />;
 
   return (
     <div className="relative">
@@ -46,9 +48,9 @@ const UserProfile = ({ userId }) => {
       </div>
       <div className="h-96 shadow-lg relative">
         <img src={backgroundUrl} className="h-full w-full object-cover" />
-        <img src={profileObj.imageUrl} alt={profileObj.name} className="w-20 h-20 absolute -bottom-8 left-2/4 -translate-x-2/4 shadow-lg rounded-full" />
+        <img src={author?.image} alt={author?.full_name} className="w-20 h-20 absolute -bottom-8 left-2/4 -translate-x-2/4 shadow-lg rounded-full" />
       </div>
-      <h1 className="font-semibold text-center text-3xl mt-10 mb-3">{profileObj.name}</h1>
+      <h1 className="font-semibold text-center text-3xl mt-10 mb-3">{author?.full_name}</h1>
       <div className="flex justify-center my-6">
         <button 
           type="button"
